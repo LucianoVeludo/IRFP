@@ -35,9 +35,16 @@ const CalculadoraIR = () => {
   };
 
   const compararImpostos = () => {
-    const atual = calcularImpostoAtual(Number(salario));
-    const novo = calcularImpostoNovo(Number(salario));
-    setResultado({ atual, novo, diferenca: atual - novo });
+    const salarioNumero = Number(salario);
+    const impostoAtual = calcularImpostoAtual(salarioNumero);
+    const impostoNovo = calcularImpostoNovo(salarioNumero);
+    const diferenca = impostoAtual - impostoNovo; // Garantindo que a diferença seja recalculada corretamente
+  
+    setResultado({
+      atual: impostoAtual,
+      novo: impostoNovo,
+      diferenca: diferenca, // Atualizando o estado corretamente
+    });
   };
 
   return (
