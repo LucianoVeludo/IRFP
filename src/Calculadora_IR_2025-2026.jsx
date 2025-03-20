@@ -35,8 +35,8 @@ const CalculadoraIR = () => {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen flex flex-col items-center justify-center text-center">
-      {/* Cabeçalho */}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-center">
+      {/* Título */}
       <h1 className="text-4xl font-bold text-gray-800 mb-6">
         Calculadora de Imposto de Renda
       </h1>
@@ -45,7 +45,7 @@ const CalculadoraIR = () => {
       </p>
 
       {/* Caixa de Cálculo */}
-      <div className="bg-white shadow-lg p-10 rounded-xl w-full max-w-lg">
+      <div className="bg-white shadow-lg p-10 rounded-xl w-full max-w-md">
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Faça seu cálculo</h2>
 
         {/* Entrada com "R$" antes do campo */}
@@ -85,9 +85,11 @@ const CalculadoraIR = () => {
         )}
       </div>
 
-      {/* Rodapé */}
+      {/* Rodapé com GitHub */}
       <footer className="text-gray-500 text-sm mt-10">
-        &copy; 2024 Calculadora IR. Todos os direitos reservados.
+        &copy; {new Date().getFullYear()} Calculadora IR. Todos os direitos reservados.
+        <br />
+        Desenvolvido por <a href="https://github.com/LucianoVeludo" className="text-blue-600 hover:underline">Luciano Veludo</a>.
       </footer>
     </div>
   );
