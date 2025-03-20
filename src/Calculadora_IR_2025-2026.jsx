@@ -1,9 +1,4 @@
-function CalculadoraIR() {
-  return (
-      <div>
-          <h1>Calculadora de Imposto de Renda 2026</h1>
-
-          import React, { useState } from 'react';
+import React, { useState } from 'react';
 
           const ImpostoRendaCalculator = () => {
             const [salario, setSalario] = useState('');
@@ -16,6 +11,11 @@ function CalculadoraIR() {
               if (salario <= 4664.68) return salario * 0.225 - 662.77;
               return salario * 0.275 - 896;
             };
+
+function CalculadoraIR() {
+  return (
+      <div>
+          <h1>Calculadora de Imposto de Renda 2026</h1>
 
             const calcularImpostoNovo = (salario) => {
               if (salario <= 5000) return 0;
