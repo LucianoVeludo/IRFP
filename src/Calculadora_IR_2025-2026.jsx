@@ -4,7 +4,6 @@ const CalculadoraIR = () => {
   const [salario, setSalario] = useState('');
   const [resultado, setResultado] = useState(null);
 
-  // ✅ Cálculo do Imposto de Renda ATUAL (2024)
   const calcularImpostoAtual = (salario) => {
     if (salario <= 2259.20) return 0;
     if (salario <= 2826.65) return salario * 0.075 - 169.44;
@@ -13,28 +12,13 @@ const CalculadoraIR = () => {
     return salario * 0.275 - 896;
   };
 
-  // ✅ Cálculo do Imposto de Renda NOVO (2026)
   const calcularImpostoNovo = (salario) => {
-    if (salario <= 5000) return 0; // Isento até R$ 5.000
-
-    if (salario <= 7000) {
-      return (salario - 5000) * 0.075; // 7,5% sobre o que ultrapassar R$ 5.000
-    }
-
-    if (salario <= 10000) {
-      return (salario - 7000) * 0.15 + 150; // 15% sobre o que ultrapassar R$ 7.000, +150 da faixa anterior
-    }
-
-    if (salario <= 15000) {
-      return (salario - 10000) * 0.225 + 600; // 22,5% sobre o que ultrapassar R$ 10.000, +600 das faixas anteriores
-    }
-
-    if (salario <= 50000) {
-      return (salario - 15000) * 0.275 + 1710; // 27,5% sobre o que ultrapassar R$ 15.000, +1710 das faixas anteriores
-    }
-
-    // 🔴 🔥 NOVA FAIXA ACIMA DE R$ 50.000 🔥 🔴
-    return (salario - 50000) * 0.30 + 11385; // 30% sobre o que ultrapassar R$ 50.000, +11385 das faixas anteriores
+    if (salario <= 5000) return 0;
+    if (salario <= 7000) return (salario - 5000) * 0.075;
+    if (salario <= 10000) return (salario - 7000) * 0.15 + 150;
+    if (salario <= 15000) return (salario - 10000) * 0.225 + 600;
+    if (salario <= 50000) return (salario - 15000) * 0.275 + 1710;
+    return (salario - 50000) * 0.30 + 11385;
   };
 
   const compararImpostos = () => {
@@ -51,32 +35,49 @@ const CalculadoraIR = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow-md rounded-xl">
-      <h1 className="text-2xl font-bold mb-4">Calculadora de Imposto de Renda</h1>
-      <input
-        type="number"
-        value={salario}
-        onChange={(e) => setSalario(e.target.value)}
-        placeholder="Digite seu salário mensal"
-        className="border p-2 w-full rounded"
-      />
-      <button
-        onClick={compararImpostos}
-        className="mt-4 bg-blue-500 text-white py-2 px-4 rounded"
-      >
-        Calcular
-      </button>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-500">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+        <h1 className="text-2xl font-bold text-center text-gray-800 mb-6">
+          Calculadora de Imposto de Renda
+        </h1>
 
-      {resultado && (
-        <div className="mt-4">
-          <p>📌 **Imposto Atual (2024):** <strong>R$ {resultado.atual.toFixed(2)}</strong></p>
-          <p>📌 **Novo Imposto (2026):** <strong>R$ {resultado.novo.toFixed(2)}</strong></p>
-          <p className="font-bold">
-            📉 Você vai {resultado.diferenca > 0 ? 'economizar' : 'pagar mais'}:
-            <strong> R$ {Math.abs(resultado.diferenca).toFixed(2)}</strong>
-          </p>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-medium mb-2">
+            Informe seu salário (R$)
+          </label>
+          <input
+            type="number"
+            value={salario}
+            onChange={(e) => setSalario(e.target.value)}
+            placeholder="Exemplo: 5000"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+          />
         </div>
-      )}
+
+        <button
+          onClick={compararImpostos}
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition duration-200"
+        >
+          Calcular
+        </button>
+
+        {resultado && (
+          <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+            <p className="text-lg">
+              <span className="font-bold text-gray-700">📌 Imposto Atual (2024):</span>{' '}
+              <span className="text-red-600 font-semibold">R$ {resultado.atual.toFixed(2)}</span>
+            </p>
+            <p className="text-lg">
+              <span className="font-bold text-gray-700">📌 Novo Imposto (2026):</span>{' '}
+              <span className="text-green-600 font-semibold">R$ {resultado.novo.toFixed(2)}</span>
+            </p>
+            <p className="text-lg font-bold mt-3 text-gray-900">
+              {resultado.diferenca > 0 ? '🎉 Você vai economizar:' : '⚠️ Você vai pagar mais:'}{' '}
+              <span className="text-blue-600">R$ {Math.abs(resultado.diferenca).toFixed(2)}</span>
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
