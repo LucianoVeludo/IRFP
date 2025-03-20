@@ -2,29 +2,43 @@ import React, { useState } from 'react';
 
 const CalculadoraIR = () => {
   const [salario, setSalario] = useState('');
+
+  // Função para formatar o valor em "###.###,##"
+  const formatarValor = (valor) => {
+    const numeroLimpo = valor.replace(/\D/g, '');
+    const numeroFormatado = Number(numeroLimpo) / 100;
+    return numeroFormatado.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+  };
+
+  const handleSalarioChange = (e) => {
+    const valorFormatado = formatarValor(e.target.value);
+    setSalario(valorFormatado);
+  };
+
   const [resultado, setResultado] = useState(null);
 
   const calcularImpostoAtual = (salario) => {
-    if (salario <= 2259.20) return 0;
-    if (salario <= 2826.65) return salario * 0.075 - 169.44;
-    if (salario <= 3751.05) return salario * 0.15 - 381.44;
-    if (salario <= 4664.68) return salario * 0.225 - 662.77;
-    return salario * 0.275 - 896;
+    const salarioNum = Number(salario.replace(/\./g, '').replace(',', '.'));
+    if (salarioNum <= 2259.20) return 0;
+    if (salarioNum <= 2826.65) return salarioNum * 0.075 - 169.44;
+    if (salarioNum <= 3751.05) return salarioNum * 0.15 - 381.44;
+    if (salarioNum <= 4664.68) return salarioNum * 0.225 - 662.77;
+    return salarioNum * 0.275 - 896;
   };
 
   const calcularImpostoNovo = (salario) => {
-    if (salario <= 5000) return 0;
-    if (salario <= 7000) return (salario - 5000) * 0.075;
-    if (salario <= 10000) return (salario - 7000) * 0.15 + 150;
-    if (salario <= 15000) return (salario - 10000) * 0.225 + 600;
-    if (salario <= 50000) return (salario - 15000) * 0.275 + 1710;
-    return (salario - 50000) * 0.30 + 11385;
+    const salarioNum = Number(salario.replace(/\./g, '').replace(',', '.'));
+    if (salarioNum <= 5000) return 0;
+    if (salarioNum <= 7000) return (salarioNum - 5000) * 0.075;
+    if (salarioNum <= 10000) return (salarioNum - 7000) * 0.15 + 150;
+    if (salarioNum <= 15000) return (salarioNum - 10000) * 0.225 + 600;
+    if (salarioNum <= 50000) return (salarioNum - 15000) * 0.275 + 1710;
+    return (salarioNum - 50000) * 0.30 + 11385;
   };
 
   const compararImpostos = () => {
-    const salarioNumero = Number(salario);
-    const impostoAtual = calcularImpostoAtual(salarioNumero);
-    const impostoNovo = calcularImpostoNovo(salarioNumero);
+    const impostoAtual = calcularImpostoAtual(salario);
+    const impostoNovo = calcularImpostoNovo(salario);
     const diferenca = impostoAtual - impostoNovo;
 
     setResultado({
@@ -49,23 +63,22 @@ const CalculadoraIR = () => {
         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Faça seu cálculo</h2>
 
         {/* Entrada com "R$" antes do campo */}
-        <div className="flex items-center border border-gray-300 rounded-lg p-3 text-lg">
-          <span className="mr-2 text-gray-700">R$</span>
+        <div className="flex items-center space-x-3">
+          <span className="text-lg font-medium text-gray-700">R$</span>
           <input
-            type="number"
+            type="text"
             value={salario}
-            onChange={(e) => setSalario(e.target.value)}
+            onChange={handleSalarioChange}
             placeholder="0,00"
-            className="w-full text-lg focus:outline-none"
+            className="w-40 p-3 text-lg border border-gray-300 rounded-lg text-center focus:ring-2 focus:ring-blue-400 focus:outline-none transition-all"
           />
+          <button
+            onClick={compararImpostos}
+            className="ml-3 bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all"
+          >
+            Calcular
+          </button>
         </div>
-
-        <button
-          onClick={compararImpostos}
-          className="w-full mt-4 bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition-all"
-        >
-          Calcular
-        </button>
 
         {resultado && (
           <div className="mt-6 p-6 bg-gray-50 rounded-lg">
