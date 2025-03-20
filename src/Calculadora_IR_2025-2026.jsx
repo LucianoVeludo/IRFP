@@ -4,6 +4,7 @@ const CalculadoraIR = () => {
   const [salario, setSalario] = useState('');
   const [resultado, setResultado] = useState(null);
 
+  // ✅ Cálculo do Imposto de Renda com a tabela ATUAL (2024)
   const calcularImpostoAtual = (salario) => {
     if (salario <= 2259.20) return 0;
     if (salario <= 2826.65) return salario * 0.075 - 169.44;
@@ -12,14 +13,25 @@ const CalculadoraIR = () => {
     return salario * 0.275 - 896;
   };
 
+  // ✅ Cálculo do Imposto de Renda com a PROPOSTA para 2026
   const calcularImpostoNovo = (salario) => {
-    if (salario <= 5000) return 0;
+    if (salario <= 5000) return 0; // Isento até R$ 5.000
+
+    // Faixa de transição entre 5.000 e 7.000
     if (salario <= 7000) {
-      const desconto = (7000 - salario) / 2000;
-      return (salario * 0.15) * (1 - desconto);
+      return (salario - 5000) * 0.075; // 7,5% sobre o que ultrapassar R$ 5.000
     }
-    if (salario <= 4664.68) return salario * 0.225 - 662.77;
-    return salario * 0.275 - 896;
+
+    if (salario <= 10000) {
+      return (salario - 7000) * 0.15 + 150; // 15% sobre o que ultrapassar R$ 7.000, +150 da faixa anterior
+    }
+
+    if (salario <= 15000) {
+      return (salario - 10000) * 0.225 + 600; // 22,5% sobre o que ultrapassar R$ 10.000, +600 das faixas anteriores
+    }
+
+    // Acima de R$ 15.000
+    return (salario - 15000) * 0.275 + 1710; // 27,5% sobre o que ultrapassar R$ 15.000, +1710 das faixas anteriores
   };
 
   const compararImpostos = () => {
@@ -47,11 +59,11 @@ const CalculadoraIR = () => {
 
       {resultado && (
         <div className="mt-4">
-          <p>Imposto Atual: R$ {resultado.atual.toFixed(2)}</p>
-          <p>Novo Imposto (2026): R$ {resultado.novo.toFixed(2)}</p>
+          <p>📌 **Imposto Atual (2024):** <strong>R$ {resultado.atual.toFixed(2)}</strong></p>
+          <p>📌 **Novo Imposto (2026):** <strong>R$ {resultado.novo.toFixed(2)}</strong></p>
           <p className="font-bold">
-            Você vai {resultado.diferenca > 0 ? 'economizar' : 'pagar mais'}: R${' '}
-            {Math.abs(resultado.diferenca).toFixed(2)}
+            📉 Você vai {resultado.diferenca > 0 ? 'economizar' : 'pagar mais'}:
+            <strong> R$ {Math.abs(resultado.diferenca).toFixed(2)}</strong>
           </p>
         </div>
       )}
