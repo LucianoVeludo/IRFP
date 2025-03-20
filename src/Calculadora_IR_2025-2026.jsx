@@ -4,7 +4,7 @@ const CalculadoraIR = () => {
   const [salario, setSalario] = useState('');
   const [resultado, setResultado] = useState(null);
 
-  // ✅ Cálculo do Imposto de Renda com a tabela ATUAL (2024)
+  // ✅ Cálculo do Imposto de Renda ATUAL (2024)
   const calcularImpostoAtual = (salario) => {
     if (salario <= 2259.20) return 0;
     if (salario <= 2826.65) return salario * 0.075 - 169.44;
@@ -13,11 +13,10 @@ const CalculadoraIR = () => {
     return salario * 0.275 - 896;
   };
 
-  // ✅ Cálculo do Imposto de Renda com a PROPOSTA para 2026
+  // ✅ Cálculo do Imposto de Renda NOVO (2026)
   const calcularImpostoNovo = (salario) => {
     if (salario <= 5000) return 0; // Isento até R$ 5.000
 
-    // Faixa de transição entre 5.000 e 7.000
     if (salario <= 7000) {
       return (salario - 5000) * 0.075; // 7,5% sobre o que ultrapassar R$ 5.000
     }
@@ -30,20 +29,24 @@ const CalculadoraIR = () => {
       return (salario - 10000) * 0.225 + 600; // 22,5% sobre o que ultrapassar R$ 10.000, +600 das faixas anteriores
     }
 
-    // Acima de R$ 15.000
-    return (salario - 15000) * 0.275 + 1710; // 27,5% sobre o que ultrapassar R$ 15.000, +1710 das faixas anteriores
+    if (salario <= 50000) {
+      return (salario - 15000) * 0.275 + 1710; // 27,5% sobre o que ultrapassar R$ 15.000, +1710 das faixas anteriores
+    }
+
+    // 🔴 🔥 NOVA FAIXA ACIMA DE R$ 50.000 🔥 🔴
+    return (salario - 50000) * 0.30 + 11385; // 30% sobre o que ultrapassar R$ 50.000, +11385 das faixas anteriores
   };
 
   const compararImpostos = () => {
     const salarioNumero = Number(salario);
     const impostoAtual = calcularImpostoAtual(salarioNumero);
     const impostoNovo = calcularImpostoNovo(salarioNumero);
-    const diferenca = impostoAtual - impostoNovo; // Garantindo que a diferença seja recalculada corretamente
-  
+    const diferenca = impostoAtual - impostoNovo;
+
     setResultado({
       atual: impostoAtual,
       novo: impostoNovo,
-      diferenca: diferenca, // Atualizando o estado corretamente
+      diferenca: diferenca,
     });
   };
 
