@@ -98,8 +98,11 @@ const CalculadoraIR = () => {
         )}
       </div>
 
+      {/* Espaçamento extra antes do rodapé */}
+      <div className="mt-12"></div>
+
       {/* Rodapé com GitHub */}
-      <footer className="text-gray-500 text-sm mt-10">
+      <footer className="text-gray-500 text-xs text-center">
         &copy; {new Date().getFullYear()} Calculadora IR. Todos os direitos reservados.
         <br />
         Desenvolvido por <a href="https://github.com/LucianoVeludo" className="text-blue-600 hover:underline">Luciano Veludo</a>.
