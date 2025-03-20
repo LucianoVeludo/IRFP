@@ -35,15 +35,23 @@ const CalculadoraIR = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-white text-gray-900">
-      <div className="w-full max-w-2xl p-8 text-center">
-        <h1 className="text-5xl font-semibold tracking-tight mb-8">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-2xl p-10 bg-white shadow-lg rounded-xl text-center">
+        {/* Imagem relacionada ao imposto */}
+        <img
+          src="https://cdn-icons-png.flaticon.com/512/2266/2266400.png"
+          alt="Imposto de Renda"
+          className="mx-auto w-24 mb-4"
+        />
+
+        <h1 className="text-4xl font-bold tracking-tight text-gray-900 mb-6">
           Calculadora de Imposto de Renda
         </h1>
         <p className="text-lg text-gray-600 mb-6">
           Compare quanto você pagaria de imposto na tabela atual e na proposta para 2026.
         </p>
 
+        {/* Campo de entrada */}
         <div className="flex justify-center items-center space-x-4">
           <input
             type="number"
@@ -61,16 +69,16 @@ const CalculadoraIR = () => {
         </div>
 
         {resultado && (
-          <div className="mt-10 space-y-4 text-lg font-medium">
-            <p className="text-gray-700">
+          <div className="mt-8 p-6 bg-gray-50 rounded-lg shadow-sm">
+            <p className="text-xl font-medium text-gray-700">
               📌 <strong>Imposto Atual (2024):</strong>{' '}
-              <span className="text-red-600">R$ {resultado.atual.toFixed(2)}</span>
+              <span className="text-red-600 font-semibold">R$ {resultado.atual.toFixed(2)}</span>
             </p>
-            <p className="text-gray-700">
+            <p className="text-xl font-medium text-gray-700">
               📌 <strong>Novo Imposto (2026):</strong>{' '}
-              <span className="text-green-600">R$ {resultado.novo.toFixed(2)}</span>
+              <span className="text-green-600 font-semibold">R$ {resultado.novo.toFixed(2)}</span>
             </p>
-            <p className="mt-4 text-xl font-semibold">
+            <p className="mt-5 text-2xl font-bold">
               {resultado.diferenca > 0 ? '🎉 Você vai economizar:' : '⚠️ Você vai pagar mais:'}{' '}
               <span className="text-blue-600">R$ {Math.abs(resultado.diferenca).toFixed(2)}</span>
             </p>
