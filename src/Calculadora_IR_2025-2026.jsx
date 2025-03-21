@@ -64,7 +64,7 @@ const CalculadoraIR = () => {
 
         {/* Entrada com "R$" antes do campo */}
         <div className="flex items-center space-x-3">
-          <span className="text-lg font-medium text-gray-700">R$</span>
+          <span className="text-lg font-medium text-gray-700">Salário em R$</span>
           <input
             type="text"
             value={salario}
