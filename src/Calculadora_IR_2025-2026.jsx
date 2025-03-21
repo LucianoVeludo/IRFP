@@ -83,7 +83,7 @@ const CalculadoraIR = () => {
         {resultado && (
           <div className="mt-6 p-6 bg-gray-50 rounded-lg">
             <p className="text-xl text-gray-700">
-              📌 <strong>Imposto Atual (2024):</strong>{' '}
+              📌 <strong>Imposto Atual (2025):</strong>{' '}
               <span className="text-red-600 font-semibold">R$ {resultado.atual.toFixed(2)}</span>
             </p>
             <p className="text-xl text-gray-700">
