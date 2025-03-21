@@ -6,9 +6,7 @@ const App = () => {
   return (
     <HelmetProvider>
       <Helmet>
-        {/* Código de verificação do Google AdSense */}
-        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-431303169883797"
-          crossOrigin="anonymous"></script>
+        <title>Calculadora IRPF 2026</title>
       </Helmet>
       <CalculadoraIR />
     </HelmetProvider>
